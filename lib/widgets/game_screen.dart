@@ -5,13 +5,13 @@ import 'package:quiz/models/remote_question_repository.dart';
 
 import 'package:quiz/models/quiz_session.dart';
 import 'package:quiz/models/simple_quiz_session.dart';
-import 'package:quiz/models/question.dart';
 
 class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //QuizSession session = SimpleQuizSession(questionRepository: new StaticQuestionRepository());
-    QuizSession session = SimpleQuizSession(questionRepository: new RemoteQuestionRepository("http://10.0.2.2:4567/questions/next"));
+    QuizSession session =
+        SimpleQuizSession(questionRepository: new StaticQuestionRepository());
+    //QuizSession session = SimpleQuizSession(questionRepository: new RemoteQuestionRepository("http://10.0.2.2:4567/questions/next"));
     session.nextQuestion();
 
     return Scaffold(
@@ -40,9 +40,7 @@ class GameScreen extends StatelessWidget {
   }
 
   Widget buildLoading(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator()
-    );
+    return Center(child: CircularProgressIndicator());
   }
 
   Widget buildError(BuildContext context, QuizSession session) {
@@ -50,10 +48,12 @@ class GameScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text("Sorry, something went wrong while grabbing the next question", textScaleFactor: 2.0),
+          Text("Sorry, something went wrong while grabbing the next question",
+              textScaleFactor: 2.0),
           ElevatedButton(
             onPressed: () => session.nextQuestion(),
-            child: Text("Retry", textScaleFactor: 2.0, textAlign: TextAlign.center),
+            child: Text("Retry",
+                textScaleFactor: 2.0, textAlign: TextAlign.center),
           ),
         ],
       ),
@@ -64,15 +64,14 @@ class GameScreen extends StatelessWidget {
     var question = session.currentQuestion;
     var answerButtons = question.answers.map((answer) {
       return ElevatedButton(
-        onPressed: () {
-          session.checkAnswer(answer);
-          session.nextQuestion();
-        },
-        child: SizedBox(
-          width: double.infinity,
-          child: Text(answer, textScaleFactor: 2.0, textAlign: TextAlign.center)
-        )
-      );
+          onPressed: () {
+            session.checkAnswer(answer);
+            session.nextQuestion();
+          },
+          child: SizedBox(
+              width: double.infinity,
+              child: Text(answer,
+                  textScaleFactor: 2.0, textAlign: TextAlign.center)));
     });
 
     return Center(
@@ -90,8 +89,7 @@ class GameScreen extends StatelessWidget {
   Widget buildHint(BuildContext context, QuizSession session) {
     if (session.hintRequested) {
       return Text(session.currentQuestion.hint, textScaleFactor: 2.0);
-    }
-    else {
+    } else {
       return ElevatedButton(
         onPressed: () {
           session.requestHint();
@@ -107,13 +105,15 @@ class GameScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text("GAME OVER", textScaleFactor: 2.0),
-          Text("${session.score} / ${session.questionsCount}", textScaleFactor: 2.0),
+          Text("${session.score} / ${session.questionsCount}",
+              textScaleFactor: 2.0),
           ElevatedButton(
             onPressed: () {
               // This is currently a cheating hack because we know we are the home screen!
               Navigator.pushReplacementNamed(context, "/");
             },
-            child: Text("Restart", textScaleFactor: 2.0, textAlign: TextAlign.center),
+            child: Text("Restart",
+                textScaleFactor: 2.0, textAlign: TextAlign.center),
           ),
         ],
       ),
