@@ -17,7 +17,10 @@ class StartGameScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => GameScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => GameScreen(
+                              quizCategory: QuizCategory.rookie,
+                            )),
                   );
                 },
                 child: Text("Rookie",
@@ -27,7 +30,10 @@ class StartGameScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => GameScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => GameScreen(
+                              quizCategory: QuizCategory.ninja,
+                            )),
                   );
                 },
                 child: Text("Ninja",

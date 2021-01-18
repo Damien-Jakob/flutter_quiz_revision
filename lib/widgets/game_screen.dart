@@ -7,13 +7,30 @@ import 'package:quiz/models/remote_question_repository.dart';
 import 'package:quiz/models/quiz_session.dart';
 import 'package:quiz/models/rookie_quiz_session.dart';
 
+enum QuizCategory {
+  rookie,
+  ninja,
+}
+
 class GameScreen extends StatelessWidget {
+  final QuizCategory quizCategory;
+
+  GameScreen({Key key, @required this.quizCategory}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     QuestionRepository questionRepository = new StaticQuestionRepository();
-    QuizSession session =
-        // RookieQuizSession(questionRepository: questionRepository);
-        NinjaQuizSession(questionRepository: questionRepository);
+    QuizSession session;
+
+    switch (quizCategory) {
+      case QuizCategory.rookie:
+        session = RookieQuizSession(questionRepository: questionRepository);
+        break;
+      case QuizCategory.ninja:
+        session = NinjaQuizSession(questionRepository: questionRepository);
+        break;
+    }
+
     //QuizSession session = SimpleQuizSession(questionRepository: new RemoteQuestionRepository("http://10.0.2.2:4567/questions/next"));
     session.nextQuestion();
 
