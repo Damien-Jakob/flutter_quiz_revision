@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/widgets/start_game_screen.dart';
 
 import 'widgets/game_screen.dart';
 
@@ -12,7 +13,7 @@ class QuizApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GameScreen(),
+      home: StartGameScreen(),
     );
   }
 }

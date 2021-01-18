@@ -112,7 +112,8 @@ class GameScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // This is currently a cheating hack because we know we are the home screen!
-              Navigator.pushReplacementNamed(context, "/");
+              // Navigator.pushReplacementNamed(context, "/");
+              Navigator.pop(context);
             },
             child: Text("Restart",
                 textScaleFactor: 2.0, textAlign: TextAlign.center),
