@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz/models/ninja_quiz_session.dart';
 import 'package:quiz/models/question_repository.dart';
 import 'package:quiz/models/remote_question_repository.dart';
 
 import 'package:quiz/models/quiz_session.dart';
-import 'package:quiz/models/simple_quiz_session.dart';
+import 'package:quiz/models/rookie_quiz_session.dart';
 
 class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    QuestionRepository questionRepository = new StaticQuestionRepository();
     QuizSession session =
-        SimpleQuizSession(questionRepository: new StaticQuestionRepository());
+        // RookieQuizSession(questionRepository: questionRepository);
+        NinjaQuizSession(questionRepository: questionRepository);
     //QuizSession session = SimpleQuizSession(questionRepository: new RemoteQuestionRepository("http://10.0.2.2:4567/questions/next"));
     session.nextQuestion();
 
@@ -66,7 +69,6 @@ class GameScreen extends StatelessWidget {
       return ElevatedButton(
           onPressed: () {
             session.checkAnswer(answer);
-            session.nextQuestion();
           },
           child: SizedBox(
               width: double.infinity,

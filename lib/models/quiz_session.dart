@@ -17,23 +17,26 @@ class QuizSession with ChangeNotifier {
 
   // There's no `protected` visibility on Dart, so set it back to public!
   //https://stackoverflow.com/questions/28350655/how-do-i-emulate-protected-methods-in-dart
-  var theScore = 0; // should never be accessed from the outside except from subclasses
+  var theScore =
+      0; // should never be accessed from the outside except from subclasses
+  var theState; // should never be accessed from the outside except from subclasses
 
-  var _state;
   var _hintRequested = false;
 
   Question _currentQuestion;
 
-  QuizSessionState get state => _state;
+  QuizSessionState get state => theState;
   Question get currentQuestion => _currentQuestion;
   int get questionsCount => _totalQuestionCount;
   int get score => theScore;
   bool get hintRequested => _hintRequested;
 
-  QuizSession({QuestionRepository questionRepository, @required int totalQuestionCount}) {
+  QuizSession(
+      {QuestionRepository questionRepository,
+      @required int totalQuestionCount}) {
     _questionRepository = questionRepository;
     _totalQuestionCount = totalQuestionCount;
-    _state = QuizSessionState.starting;
+    theState = QuizSessionState.starting;
   }
 
   void nextQuestion() async {
@@ -43,17 +46,15 @@ class QuizSession with ChangeNotifier {
       _currentQuestionCount++;
       if (_currentQuestionCount > _totalQuestionCount) {
         _currentQuestion = null;
-        _state = QuizSessionState.finished;
-      }
-      else {
-        _state = QuizSessionState.loading;
+        theState = QuizSessionState.finished;
+      } else {
+        theState = QuizSessionState.loading;
         notifyListeners();
         _currentQuestion = await _questionRepository.fetch();
-        _state = QuizSessionState.showing;
+        theState = QuizSessionState.showing;
       }
-    }
-    catch (error) {
-      _state = QuizSessionState.error;
+    } catch (error) {
+      theState = QuizSessionState.error;
     }
 
     notifyListeners();
